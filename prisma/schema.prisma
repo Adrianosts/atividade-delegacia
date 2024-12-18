@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TypeCrime {
+  HOMICIDIO
+  ROUBO
+  SEQUESTRO
+}
+
+enum TypeWeapon {
+  FACA
+  PISTOLA
+  OUTROS
+}
+
+model Criminal {
+  id       String @id @default(uuid()) @db.Uuid
+  name     String @db.VarChar(50)
+  lastName String @map("last_name") @db.VarChar(50)
+  age      Int
+  cpf      String @unique @db.Char(11)
+
+  crimes Crime[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("criminals")
+}
+
+model Crime {
+  id          String    @id @default(uuid()) @db.Uuid
+  crimeDescription String    @db.VarChar(255) @map("crime_description")
+  crimeType        TypeCrime @map("crime_type")
+
+  criminal   Criminal @relation(fields: [criminalId], references: [id])
+  criminalId String   @unique @db.Uuid @map("criminal_id")
+
+  weapons Weapon[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("crimes")
+}
+
+model Weapon {
+  id          String     @id @default(uuid()) @db.Uuid
+  weaponDescription String     @db.VarChar(255) @map("weapon_description")
+  weaponType        TypeWeapon @map("weapon_type")
+
+  crime   Crime  @relation(fields: [crimeId], references: [id])
+  crimeId String @unique @db.Uuid @map("crime_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("weapons")
+}
