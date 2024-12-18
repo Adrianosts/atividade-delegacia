@@ -1,4 +1,4 @@
-## Sistema backend para gerenciar registros de criminosos, crimes e armas utilizando **Prisma ORM** com um banco de dados **PostgreSQL**.
+## Sistema backend para gerenciar registros de criminosos, crimes e armas utilizando `Prisma ORM` com um banco de dados `PostgreSQL`.
 
 ## 1. Estrutura do Banco de Dados
 
@@ -89,7 +89,7 @@ Forma criados dois enums no Prisma para representar tipos de crimes e armas, mel
     - `PISTOLA`
     - `OUTROS`
 
-## Resumo
+## 4. Resumo
 
 - Banco de dados: PostgreSQL configurado via variável de ambiente `DATABASE_URL`.
 - ORM: Prisma para manipulação dos dados.
